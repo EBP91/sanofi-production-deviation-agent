@@ -1,0 +1,34 @@
+# SOP: Abfüllung
+**Dokument-ID:** SOP-ABF-03  
+**Abteilung:** Abfuellung_Steril  
+**Anlage:** Alle Typen  
+**Gültig ab:** 01.01.2024
+
+## 1. Ziel
+Diese Arbeitsanweisung beschreibt den korrekten Ablauf für den Prozess "Abfüllung". 
+Sicherheit und Qualität stehen an erster Stelle.
+
+## 2. Arbeitsanweisungen (Schritt-für-Schritt)
+1. Sterilität
+- Der Isolator darf nur über die Handschuhe bedient werden.
+- Prüfen Sie die Handschuhe vor jeder Schicht auf Risse.
+
+2. Abfüllen
+- Zielgewicht pro Fläschchen: 10.0 Gramm (+/- 0.2g).
+- Führen Sie alle 30 Minuten eine Gewichtskontrolle durch.
+- Bei Glasbruch: Anlage sofort stoppen und Reinigunsprotokoll starten.
+
+3. Abschluss
+- Verschließen Sie die Fläschchen sofort mit Gummistopfen.
+
+## 3. Fehlerbehebung (Troubleshooting)
+Wenn Probleme auftreten, nutzen Sie diese Tabelle:
+
+| Problem | Mögliche Ursache | Sofortmaßnahme |
+| :--- | :--- | :--- |
+| Glassplitter im Isolator gefunden | Ein Fläschchen (Vial) ist am Sternrad zerbrochen, weil es falsch justiert war. | Linie gestoppt, alles gereinigt (Line Clearance). |
+| Füllgewicht zu niedrig | Luftblasen im Zuleitungsschlauch. | Leitung entlüftet und 10 Test-Füllungen gemacht. |
+
+## 4. Wichtige Grenzwerte
+- Halten Sie sich strikt an die oben genannten Zahlenwerte (Temperatur, Druck, Gewicht).
+- Dokumentieren Sie jede Abweichung sofort.

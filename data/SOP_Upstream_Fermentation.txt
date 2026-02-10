@@ -1,0 +1,35 @@
+# SOP: Zellkultur-Wachstum
+**Dokument-ID:** SOP-UPS-01  
+**Abteilung:** Upstream_Fermentation  
+**Anlage:** Alle Typen  
+**Gültig ab:** 01.01.2024
+
+## 1. Ziel
+Diese Arbeitsanweisung beschreibt den korrekten Ablauf für den Prozess "Zellkultur-Wachstum". 
+Sicherheit und Qualität stehen an erster Stelle.
+
+## 2. Arbeitsanweisungen (Schritt-für-Schritt)
+1. Vorbereitung
+- Stellen Sie sicher, dass der Bioreaktor sauber und steril ist.
+- Kalibrieren Sie die pH-Sonde (Muss-Wert: 7.0) und den Sauerstoffsensor.
+
+2. Prozessstart
+- Füllen Sie das Nährmedium ein.
+- Starten Sie das Rührwerk mit 100 Umdrehungen pro Minute (RPM).
+- Die Temperatur muss konstant auf 37.0 Grad Celsius gehalten werden (+/- 0.5 Grad).
+
+3. Überwachung
+- Prüfen Sie stündlich den pH-Wert. Sollbereich: 6.8 bis 7.2.
+- Prüfen Sie, ob genug Kühlwasser verfügbar ist.
+
+## 3. Fehlerbehebung (Troubleshooting)
+Wenn Probleme auftreten, nutzen Sie diese Tabelle:
+
+| Problem | Mögliche Ursache | Sofortmaßnahme |
+| :--- | :--- | :--- |
+| pH-Wert sinkt zu schnell ab | Die pH-Sonde war verschmutzt (Biofilm) und hat falsche Werte geliefert. | Sonde gereinigt und neu kalibriert. |
+| Temperatur zu hoch (über 37.5 Grad) | Das Kühlwasserventil hat geklemmt und nicht geöffnet. | Ventil manuell geöffnet, Techniker gerufen. |
+
+## 4. Wichtige Grenzwerte
+- Halten Sie sich strikt an die oben genannten Zahlenwerte (Temperatur, Druck, Gewicht).
+- Dokumentieren Sie jede Abweichung sofort.

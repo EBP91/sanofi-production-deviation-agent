@@ -1,0 +1,24 @@
+# ABWEICHUNGSBERICHT (DEVIATION)
+**ID:** DEV-2025-0007  
+**Datum:** 03.08.2025  
+**Anlage:** Capping-Maschine  
+**Abteilung:** Abfuellung_Steril
+
+## Beschreibung des Fehlers
+Während des Prozesses "Abfüllung" ist folgendes passiert:  
+**Füllgewicht zu niedrig** Der Fehler trat um 8:15 Uhr auf.
+
+## Ursachenanalyse (Root Cause)
+Wir haben untersucht, warum das passiert ist:  
+Luftblasen im Zuleitungsschlauch.
+
+## Durchgeführte Maßnahmen
+Um das Problem sofort zu lösen, haben wir folgendes getan:  
+Leitung entlüftet und 10 Test-Füllungen gemacht.
+
+## Langfristige Lösung (CAPA)
+Damit das nicht wieder passiert:  
+Automatisches Entlüftungsventil eingebaut.
+
+**Status:** Geschlossen.  
+**Unterschrift:** J. Schmidt

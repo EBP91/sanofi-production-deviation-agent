@@ -1,0 +1,24 @@
+# ABWEICHUNGSBERICHT (DEVIATION)
+**ID:** DEV-2025-0037  
+**Datum:** 12.11.2025  
+**Anlage:** Etikettierer  
+**Abteilung:** Verpackung
+
+## Beschreibung des Fehlers
+Während des Prozesses "Verpackung" ist folgendes passiert:  
+**Beipackzettel fehlt** Der Fehler trat um 10:53 Uhr auf.
+
+## Ursachenanalyse (Root Cause)
+Wir haben untersucht, warum das passiert ist:  
+Magazin für Beipackzettel war leer und Alarm ging nicht.
+
+## Durchgeführte Maßnahmen
+Um das Problem sofort zu lösen, haben wir folgendes getan:  
+Magazin aufgefüllt, betroffene Packungen aussortiert.
+
+## Langfristige Lösung (CAPA)
+Damit das nicht wieder passiert:  
+Warnleuchte repariert.
+
+**Status:** Geschlossen.  
+**Unterschrift:** A. Yilmaz

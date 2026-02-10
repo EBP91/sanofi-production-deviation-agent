@@ -1,0 +1,24 @@
+# ABWEICHUNGSBERICHT (DEVIATION)
+**ID:** DEV-2025-0019  
+**Datum:** 03.12.2025  
+**Anlage:** Filter-Station-B  
+**Abteilung:** Downstream_Reinigung
+
+## Beschreibung des Fehlers
+Während des Prozesses "Protein-Reinigung" ist folgendes passiert:  
+**Undichtigkeit am Schlauch** Der Fehler trat um 14:49 Uhr auf.
+
+## Ursachenanalyse (Root Cause)
+Wir haben untersucht, warum das passiert ist:  
+Eine Dichtung (O-Ring) wurde beim Zusammenbau vergessen.
+
+## Durchgeführte Maßnahmen
+Um das Problem sofort zu lösen, haben wir folgendes getan:  
+Prozess gestoppt, Dichtung eingesetzt.
+
+## Langfristige Lösung (CAPA)
+Damit das nicht wieder passiert:  
+Vier-Augen-Prinzip beim Zusammenbau eingeführt.
+
+**Status:** Geschlossen.  
+**Unterschrift:** S. Klein

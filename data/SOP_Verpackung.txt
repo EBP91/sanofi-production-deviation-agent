@@ -1,0 +1,34 @@
+# SOP: Verpackung
+**Dokument-ID:** SOP-VER-04  
+**Abteilung:** Verpackung  
+**Anlage:** Alle Typen  
+**Gültig ab:** 01.01.2024
+
+## 1. Ziel
+Diese Arbeitsanweisung beschreibt den korrekten Ablauf für den Prozess "Verpackung". 
+Sicherheit und Qualität stehen an erster Stelle.
+
+## 2. Arbeitsanweisungen (Schritt-für-Schritt)
+1. Materialprüfung
+- Prüfen Sie, ob die richtigen Etiketten und Beipackzettel eingelegt sind.
+- Vergleichen Sie die Materialnummer mit dem Auftrag.
+
+2. Maschinenstart
+- Starten Sie den Kartonierer.
+- Achten Sie darauf, dass immer genug Beipackzettel im Magazin sind.
+
+3. Qualitätskontrolle
+- Die Kamera prüft, ob das Etikett gerade sitzt.
+- Wenn die Kamera 3 Fehler hintereinander meldet: Maschine anhalten und Sensor prüfen.
+
+## 3. Fehlerbehebung (Troubleshooting)
+Wenn Probleme auftreten, nutzen Sie diese Tabelle:
+
+| Problem | Mögliche Ursache | Sofortmaßnahme |
+| :--- | :--- | :--- |
+| Etikett schief aufgeklebt | Der Sensor für die Flaschenerkennung war verstaubt. | Sensor gereinigt. |
+| Beipackzettel fehlt | Magazin für Beipackzettel war leer und Alarm ging nicht. | Magazin aufgefüllt, betroffene Packungen aussortiert. |
+
+## 4. Wichtige Grenzwerte
+- Halten Sie sich strikt an die oben genannten Zahlenwerte (Temperatur, Druck, Gewicht).
+- Dokumentieren Sie jede Abweichung sofort.

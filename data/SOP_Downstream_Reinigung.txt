@@ -1,0 +1,35 @@
+# SOP: Protein-Reinigung
+**Dokument-ID:** SOP-DOW-02  
+**Abteilung:** Downstream_Reinigung  
+**Anlage:** Alle Typen  
+**Gültig ab:** 01.01.2024
+
+## 1. Ziel
+Diese Arbeitsanweisung beschreibt den korrekten Ablauf für den Prozess "Protein-Reinigung". 
+Sicherheit und Qualität stehen an erster Stelle.
+
+## 2. Arbeitsanweisungen (Schritt-für-Schritt)
+1. Aufbau
+- Kontrollieren Sie alle Schläuche auf Risse.
+- Setzen Sie überall neue Dichtungen ein.
+- Ziehen Sie die Klemmen fest an.
+
+2. Durchführung
+- Starten Sie die Pumpe langsam (Flussrate: 5 Liter/Stunde).
+- Der Druck darf 3.0 bar nicht überschreiten.
+- Wenn der Druck über 3.0 bar steigt: Sofort stoppen!
+
+3. Filterwechsel
+- Filter müssen nach jeder Charge gewechselt werden.
+
+## 3. Fehlerbehebung (Troubleshooting)
+Wenn Probleme auftreten, nutzen Sie diese Tabelle:
+
+| Problem | Mögliche Ursache | Sofortmaßnahme |
+| :--- | :--- | :--- |
+| Filter verstopft (Druck zu hoch) | Die Lösung war zu kalt, dadurch wurde das Produkt zähflüssig. | Prozess pausiert, Lösung auf Raumtemperatur erwärmt. |
+| Undichtigkeit am Schlauch | Eine Dichtung (O-Ring) wurde beim Zusammenbau vergessen. | Prozess gestoppt, Dichtung eingesetzt. |
+
+## 4. Wichtige Grenzwerte
+- Halten Sie sich strikt an die oben genannten Zahlenwerte (Temperatur, Druck, Gewicht).
+- Dokumentieren Sie jede Abweichung sofort.

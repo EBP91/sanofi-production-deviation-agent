@@ -1,0 +1,24 @@
+# ABWEICHUNGSBERICHT (DEVIATION)
+**ID:** DEV-2025-0024  
+**Datum:** 19.03.2025  
+**Anlage:** Bioreaktor-500L  
+**Abteilung:** Upstream_Fermentation
+
+## Beschreibung des Fehlers
+Während des Prozesses "Zellkultur-Wachstum" ist folgendes passiert:  
+**Temperatur zu hoch (über 37.5 Grad)** Der Fehler trat um 16:46 Uhr auf.
+
+## Ursachenanalyse (Root Cause)
+Wir haben untersucht, warum das passiert ist:  
+Das Kühlwasserventil hat geklemmt und nicht geöffnet.
+
+## Durchgeführte Maßnahmen
+Um das Problem sofort zu lösen, haben wir folgendes getan:  
+Ventil manuell geöffnet, Techniker gerufen.
+
+## Langfristige Lösung (CAPA)
+Damit das nicht wieder passiert:  
+Ventil gegen ein digitales Regelventil ausgetauscht.
+
+**Status:** Geschlossen.  
+**Unterschrift:** S. Klein

@@ -1,0 +1,24 @@
+# ABWEICHUNGSBERICHT (DEVIATION)
+**ID:** DEV-2025-0017  
+**Datum:** 07.12.2025  
+**Anlage:** Bioreaktor-100L  
+**Abteilung:** Upstream_Fermentation
+
+## Beschreibung des Fehlers
+Während des Prozesses "Zellkultur-Wachstum" ist folgendes passiert:  
+**pH-Wert sinkt zu schnell ab** Der Fehler trat um 8:35 Uhr auf.
+
+## Ursachenanalyse (Root Cause)
+Wir haben untersucht, warum das passiert ist:  
+Die pH-Sonde war verschmutzt (Biofilm) und hat falsche Werte geliefert.
+
+## Durchgeführte Maßnahmen
+Um das Problem sofort zu lösen, haben wir folgendes getan:  
+Sonde gereinigt und neu kalibriert.
+
+## Langfristige Lösung (CAPA)
+Damit das nicht wieder passiert:  
+Reinigungsintervall der Sonden verkürzt.
+
+**Status:** Geschlossen.  
+**Unterschrift:** J. Schmidt

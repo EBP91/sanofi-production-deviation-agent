@@ -1,0 +1,24 @@
+# ABWEICHUNGSBERICHT (DEVIATION)
+**ID:** DEV-2025-0021  
+**Datum:** 06.04.2025  
+**Anlage:** Kartonierer-HighSpeed  
+**Abteilung:** Verpackung
+
+## Beschreibung des Fehlers
+Während des Prozesses "Verpackung" ist folgendes passiert:  
+**Etikett schief aufgeklebt** Der Fehler trat um 19:16 Uhr auf.
+
+## Ursachenanalyse (Root Cause)
+Wir haben untersucht, warum das passiert ist:  
+Der Sensor für die Flaschenerkennung war verstaubt.
+
+## Durchgeführte Maßnahmen
+Um das Problem sofort zu lösen, haben wir folgendes getan:  
+Sensor gereinigt.
+
+## Langfristige Lösung (CAPA)
+Damit das nicht wieder passiert:  
+Reinigungsplan für Sensoren erstellt (täglich).
+
+**Status:** Geschlossen.  
+**Unterschrift:** M. Müller

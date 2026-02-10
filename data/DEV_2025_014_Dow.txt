@@ -1,0 +1,24 @@
+# ABWEICHUNGSBERICHT (DEVIATION)
+**ID:** DEV-2025-0014  
+**Datum:** 25.04.2025  
+**Anlage:** Chromatographie-Saeule-A  
+**Abteilung:** Downstream_Reinigung
+
+## Beschreibung des Fehlers
+Während des Prozesses "Protein-Reinigung" ist folgendes passiert:  
+**Filter verstopft (Druck zu hoch)** Der Fehler trat um 19:52 Uhr auf.
+
+## Ursachenanalyse (Root Cause)
+Wir haben untersucht, warum das passiert ist:  
+Die Lösung war zu kalt, dadurch wurde das Produkt zähflüssig.
+
+## Durchgeführte Maßnahmen
+Um das Problem sofort zu lösen, haben wir folgendes getan:  
+Prozess pausiert, Lösung auf Raumtemperatur erwärmt.
+
+## Langfristige Lösung (CAPA)
+Damit das nicht wieder passiert:  
+Temperaturfühler am Vorratstank installiert.
+
+**Status:** Geschlossen.  
+**Unterschrift:** A. Yilmaz

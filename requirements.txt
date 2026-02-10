@@ -1,0 +1,11 @@
+streamlit
+langchain
+langchain-community
+langchain-chroma
+langchain-google-genai
+langchain-huggingface
+langgraph
+chromadb
+sentence-transformers
+python-dotenv
+pysqlite3-binary
