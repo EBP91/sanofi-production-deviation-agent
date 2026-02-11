@@ -56,6 +56,7 @@ with col_header:
     st.title("🏭 Smart Manufacturing & Supply Agent")
     st.markdown("""
     © 2025 | Dr. Eike Bent Preuß | Sanofi Demo 1.5
+    
     **Architektur & Funktion:**
     * 🧠 **LLM:** Google Gemma 3 (27B) für Reasoning.
     * 📚 **RAG:** ChromaDB für SOPs & Historische Daten.
@@ -381,6 +382,7 @@ if not st.session_state.pending_escalation:
                     except Exception as e:
                         status_container.update(label="💥 Fehler", state="error")
                         st.error(str(e))
+
 
 
 
