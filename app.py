@@ -73,12 +73,47 @@ with col_status:
     else:
         st.warning("🟠 API Key fehlt")
 
-# --- ARCHITEKTUR VISUALISIERUNG ---
-with st.expander("ℹ️ Architektur anzeigen (LangGraph)", expanded=False):
-    st.markdown("Der interne Prozess (Auditor-Loop):")
-    st.image("https://mermaid.ink/img/pako:eNpVkFtqwzAQRbfS_GwCpYW8yEAKpV9CqS8ietmSRVYjS0ZOCnH3jmM7_brQnDPn3hmtYOMUwcb4-LxgC_2RdmQ_PioK01zR2xX9Pj_eP9D19YFm8wV9vL9RCl5_oR_0g4I1LAl8qDgqWOKKLI5H1yQ4K_hO4YVj7_D4B95J3DncU_gkcMcQnMI9Q2gY1jD8B-4VdlzR1E1d1-1Nc-t4t2M_dF3d_t2N1-3Y3a67be92-2-7e_60BwVb_oKCI4_mF7M3S6I?type=png")
+# --- ARCHITEKTUR VISUALISIERUNG (Ersetzt den alten Expander) ---
+with st.expander("ℹ️ Architektur & Workflow anzeigen (Live-Graph)", expanded=False):
+    st.markdown("### 🧠 Der interne Denkprozess (LangGraph)")
+    st.write("Im Gegensatz zu einfachen Chatbots nutzt dieses System einen **zyklischen Graphen** mit Qualitätskontrolle:")
+    
+    # Graphviz Diagramm - Sieht sehr technisch und professionell aus
+    st.graphviz_chart("""
+        digraph {
+            rankdir=LR;
+            bgcolor="transparent";
+            node [shape=box, style="filled,rounded", fontname="Arial", fontsize=12];
+            edge [fontname="Arial", fontsize=10];
 
-st.divider()
+            # Nodes definieren
+            Start [shape=oval, fillcolor="#e0e0e0", label="Start\n(User Frage)"];
+            Retrieve [label="🔍 Retrieve\n(ChromaDB)", fillcolor="#d1c4e9"];
+            Generate [label="📝 Generate\n(Gemma 27B)", fillcolor="#bbdefb"];
+            Auditor [label="⚖️ Auditor\n(GMP Check)", fillcolor="#ffcc80", shape=diamond, style="filled"];
+            End [shape=oval, fillcolor="#c8e6c9", label="✅ Output\n(Antwort)"];
+            Escalate [shape=oval, fillcolor="#ffcdd2", label="🛑 Eskalation\n(Supervisor)"];
+
+            # Kanten (Verbindungen) ziehen
+            Start -> Retrieve;
+            Retrieve -> Generate [label="Kontext (SOPs)"];
+            Generate -> Auditor [label="Entwurf"];
+            
+            # Die Entscheidungs-Wege
+            Auditor -> End [label="Pass", color="#2e7d32", penwidth=2.0];
+            Auditor -> Generate [label="Fail / Retry\n(Loop)", color="#c62828", style="dashed", penwidth=1.5];
+            Auditor -> Escalate [label="No Data", color="#ef6c00"];
+        }
+    """)
+
+    st.info("""
+    **Legende der Logik:**
+    1. **Retrieve:** Zuerst sucht der Agent passende SOPs und historische Fehlerberichte.
+    2. **Generate:** Er entwirft basierend darauf eine Lösung.
+    3. **Auditor (The Loop):** Dies ist der kritische Schritt. Ein virtueller Prüfer validiert die Antwort. 
+       - Ist sie falsch, zwingt er den Agenten zur **Selbstkorrektur** (roter Pfeil).
+       - Ist sie korrekt, wird sie freigegeben (grüner Pfeil).
+    """)
 
 # --- SIDEBAR (Supervisor Dashboard) ---
 with st.sidebar:
@@ -339,3 +374,4 @@ if not st.session_state.pending_escalation:
                     except Exception as e:
                         status_container.update(label="💥 Fehler", state="error")
                         st.error(str(e))
+
