@@ -2,7 +2,6 @@ __import__('pysqlite3')
 import sys
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
-# Standard Imports
 import os
 import streamlit as st
 import uuid
@@ -25,6 +24,15 @@ load_dotenv()
 CHROMA_PATH = "chroma_db"
 LLM_MODEL = "gemma-3-27b-it"
 
+# --- DEFINITION DER DEMO-SZENARIEN (Für das Dropdown) ---
+DEMO_SCENARIOS = {
+    "--- Bitte wählen ---": None,
+    "🧪 Glasbruch (SOP vorhanden)": "Ich habe Glasbruch im Isolator der Abfülllinie. Was tun?",
+    "📉 pH-Wert Abfall (SOP vorhanden)": "Der pH-Wert im Bioreaktor ist auf 6.5 gesunken.",
+    "⚠️ Unbekannter Fehler (Eskalation)": "Fehlercode E-999: Flux-Kompensator defekt.",
+    "🚫 Wetter / Off-Topic (Eskalation)": "Wie wird das Wetter morgen in Frankfurt?"
+}
+
 # Seite konfigurieren
 st.set_page_config(
     page_title="Sanofi AI Assistant", 
@@ -42,73 +50,46 @@ if "pending_escalation" not in st.session_state:
     st.session_state.pending_escalation = None
 
 # --- UI HEADER & STATUS ---
-
-# Spalten für Layout: Links Titel/Info, Rechts System-Status
 col_header, col_status = st.columns([3, 1])
 
 with col_header:
     st.title("🏭 Smart Manufacturing & Supply Agent")
     st.markdown("""
-    **Was ist das?** Ein intelligenter Assistent zur Lösung von **Produktionsabweichungen (Deviations)** im GMP-Umfeld. Er analysiert Fehlerbeschreibungen und liefert SOP-basierte Maßnahmen.
-
-    **Die Architektur (Tech Stack):**
-    * 🧠 **LLM:** Google Gemma 3 (27B) für logisches Denken (Reasoning).
-    * 📚 **RAG:** ChromaDB Vektor-Datenbank für SOPs & Historische Daten.
-    * 🔄 **LangGraph:** Zyklischer Agent mit **"Auditor-Loop"** (Selbstreflexion & Qualitätsprüfung).
+    **Architektur & Funktion:**
+    * 🧠 **LLM:** Google Gemma 3 (27B) für Reasoning.
+    * 📚 **RAG:** ChromaDB für SOPs & Historische Daten.
+    * 🔄 **LangGraph:** Zyklischer "Auditor-Loop" zur Qualitätskontrolle.
     """)
 
 with col_status:
     st.caption("SYSTEM STATUS")
-    # Check: Datenbank
     if os.path.exists(CHROMA_PATH) and os.listdir(CHROMA_PATH):
         st.success("🟢 Datenbank Online")
     else:
         st.error("🔴 Datenbank Offline")
     
-    # Check: API Key
     if os.environ.get("GOOGLE_API_KEY"):
         st.success("🟢 LLM Verbunden")
     else:
         st.warning("🟠 API Key fehlt")
 
 # --- ARCHITEKTUR VISUALISIERUNG ---
-with st.expander("ℹ️ Wie funktioniert der 'Auditor-Loop'? (Architektur anzeigen)"):
-    st.markdown("""
-    Dieser Agent arbeitet nicht linear. Er besitzt einen **internen Prüfer (Auditor)**.
-    1. **Retrieve:** Agent sucht Wissen in der Datenbank.
-    2. **Generate:** Agent entwirft eine Antwort.
-    3. **Auditor Check:** Ein zweites LLM-Modul prüft die Antwort auf Fakten & Sicherheit.
-    4. **Loop:** Bei Fehlern muss der Agent die Antwort korrigieren, bevor du sie siehst.
-    """)
-    st.image("https://mermaid.ink/img/pako:eNpVkFtqwzAQRbfS_GwCpYW8yEAKpV9CqS8ietmSRVYjS0ZOCnH3jmM7_brQnDPn3hmtYOMUwcb4-LxgC_2RdmQ_PioK01zR2xX9Pj_eP9D19YFm8wV9vL9RCl5_oR_0g4I1LAl8qDgqWOKKLI5H1yQ4K_hO4YVj7_D4B95J3DncU_gkcMcQnMI9Q2gY1jD8B-4VdlzR1E1d1-1Nc-t4t2M_dF3d_t2N1-3Y3a67be92-2-7e_60BwVb_oKCI4_mF7M3S6I?type=png", caption="LangGraph Workflow")
-
+with st.expander("ℹ️ Architektur anzeigen (LangGraph)", expanded=False):
+    st.markdown("Der interne Prozess (Auditor-Loop):")
+    st.image("https://mermaid.ink/img/pako:eNpVkFtqwzAQRbfS_GwCpYW8yEAKpV9CqS8ietmSRVYjS0ZOCnH3jmM7_brQnDPn3hmtYOMUwcb4-LxgC_2RdmQ_PioK01zR2xX9Pj_eP9D19YFm8wV9vL9RCl5_oR_0g4I1LAl8qDgqWOKKLI5H1yQ4K_hO4YVj7_D4B95J3DncU_gkcMcQnMI9Q2gY1jD8B-4VdlzR1E1d1-1Nc-t4t2M_dF3d_t2N1-3Y3a67be92-2-7e_60BwVb_oKCI4_mF7M3S6I?type=png")
 
 st.divider()
-
-# --- BEISPIEL-FRAGEN ---
-with st.expander("💡 Demo-Szenarien laden (Hier klicken)", expanded=False):
-    c1, c2 = st.columns(2)
-    with c1:
-        st.markdown("✅ **Gültige GMP-Fragen**")
-        st.code("Ich habe Glasbruch im Isolator der Abfülllinie. Was tun?", language=None)
-        st.code("Der pH-Wert im Bioreaktor ist auf 6.5 gesunken.", language=None)
-    with c2:
-        st.markdown("⚠️ **Unbekannt / Off-Topic (Triggered Eskalation)**")
-        st.code("Fehlercode E-999: Flux-Kompensator defekt.", language=None)
-        st.code("Wie wird das Wetter morgen?", language=None)
 
 # --- SIDEBAR (Supervisor Dashboard) ---
 with st.sidebar:
     st.header("👨‍💼 Supervisor Dashboard")
-    st.info("Hier landen eskalierte Tickets aus der Produktion.")
+    st.info("Eingehende Tickets aus der Produktion:")
     
-    # API Key Input (versteckt wenn da)
     if not os.environ.get("GOOGLE_API_KEY"):
         api_key = st.text_input("Google API Key", type="password")
         if api_key: os.environ["GOOGLE_API_KEY"] = api_key
     
     st.markdown("---")
-    st.subheader("📋 Ticket Log")
     
     if not st.session_state.escalation_logs:
         st.caption("Keine offenen Tickets.")
@@ -194,7 +175,7 @@ def build_graph():
         })
         return {"answer": response}
 
-    # 3. AUDITOR (Visible Logic)
+    # 3. AUDITOR
     def auditor_node(state: AgentState):
         answer = state["answer"]
         question = state["question"]
@@ -255,7 +236,7 @@ if st.session_state.pending_escalation:
         st.write("Dies scheint ein unbekannter Fehler oder ein Off-Topic Thema zu sein. Soll ein Ticket für den Supervisor erstellt werden?")
         
         col_yes, col_no = st.columns(2)
-        if col_yes.button("✅ Ja, melden (Ticket erstellen)"):
+        if col_yes.button("✅ Ja, melden"):
             ticket_id = str(uuid.uuid4())[:4].upper()
             st.session_state.escalation_logs.append({
                 "id": ticket_id,
@@ -270,35 +251,65 @@ if st.session_state.pending_escalation:
             st.session_state.pending_escalation = None
             st.rerun()
 
-# 3. Chat Input
+# 3. INPUT BEREICH (Dropdown ODER Chat Input)
 if not st.session_state.pending_escalation:
-    if prompt := st.chat_input("Beschreibe dein Problem..."):
-        st.session_state.messages.append({"role": "user", "content": prompt})
-        with st.chat_message("user"):
-            st.markdown(prompt)
+    
+    # --- NEU: Szenarien Auswahl ---
+    st.markdown("### 💬 Neue Anfrage starten")
+    col_sel, col_btn = st.columns([4, 1])
+    
+    with col_sel:
+        selected_scenario = st.selectbox(
+            "Wähle ein Test-Szenario (Optional):", 
+            options=list(DEMO_SCENARIOS.keys()),
+            label_visibility="collapsed"
+        )
+    
+    start_scenario = False
+    with col_btn:
+        if st.button("▶️ Szenario starten", type="primary"):
+            start_scenario = True
 
+    # Chat Input (Manuelle Eingabe)
+    chat_input = st.chat_input("...oder beschreibe dein Problem hier manuell")
+
+    # --- ENTSCHEIDUNG: Woher kommt der Prompt? ---
+    final_prompt = None
+    
+    if start_scenario and selected_scenario and DEMO_SCENARIOS[selected_scenario]:
+        final_prompt = DEMO_SCENARIOS[selected_scenario]
+    elif chat_input:
+        final_prompt = chat_input
+
+    # --- AUSFÜHRUNG ---
+    if final_prompt:
+        st.session_state.messages.append({"role": "user", "content": final_prompt})
+        st.rerun() # Rerun, um die User-Nachricht oben anzuzeigen und Input zu clearen
+
+    # (Nach dem Rerun wird die letzte Nachricht verarbeitet, wenn sie vom User ist und der Bot noch nicht geantwortet hat)
+    # Logik-Trick: Wir prüfen, ob die letzte Nachricht vom User ist. Wenn ja, antwortet der Bot.
+    if st.session_state.messages and st.session_state.messages[-1]["role"] == "user":
+        
+        last_user_prompt = st.session_state.messages[-1]["content"]
+        
         if not os.environ.get("GOOGLE_API_KEY"):
             st.error("Bitte API Key eingeben!")
         else:
             app = build_graph()
             if app:
                 with st.chat_message("assistant"):
-                    # VISUALISIERUNG DES AUDITOR PROZESSES
                     status_container = st.status("🚀 Agent startet...", expanded=True)
                     try:
                         # 1. Retrieve
                         status_container.write("📚 Schritt 1: Suche in GMP-Datenbank...")
-                        
-                        inputs = {"question": prompt, "revision_number": 0, "critique": ""}
-                        # Wir führen den Graph aus
+                        inputs = {"question": last_user_prompt, "revision_number": 0, "critique": ""}
                         final_state = app.invoke(inputs)
 
                         # 2. Generate
                         status_container.write("📝 Schritt 2: Antwort wird generiert...")
                         
-                        # 3. Auditor Logic sichtbar machen
+                        # 3. Auditor Logic
                         if final_state["status"] == "RETRY" or final_state["revision_number"] > 0:
-                            # Das bedeutet, der Auditor hat eingegriffen
                             status_container.write("⚖️ **Auditor:** ⚠️ Mängel entdeckt!")
                             status_container.write(f"🔧 *Korrektur:* {final_state.get('critique', 'GMP Anpassung')}")
                             status_container.update(label="✅ Antwort nach Korrektur freigegeben", state="complete")
@@ -309,13 +320,11 @@ if not st.session_state.pending_escalation:
                             status_container.write("⚖️ **Auditor:** ✅ Antwort ist GMP-konform.")
                             status_container.update(label="✅ Fertig", state="complete")
 
-                        # --- ERGEBNIS VERARBEITUNG ---
+                        # --- ERGEBNIS ---
                         if final_state["status"] == "ESCALATE":
-                            st.session_state.pending_escalation = prompt
+                            st.session_state.pending_escalation = last_user_prompt
                             st.rerun()
-
                         else:
-                            # RAG Evidence
                             with st.expander("🔍 Quellen & SOPs (Evidence)"):
                                 for i, doc in enumerate(final_state["context"]):
                                     meta = final_state["metadata"][i] if i < len(final_state["metadata"]) else {}
