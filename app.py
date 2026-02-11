@@ -79,12 +79,18 @@ with st.expander("ℹ️ Architektur & Workflow anzeigen (Live-Graph)", expanded
     st.write("Im Gegensatz zu einfachen Chatbots nutzt dieses System einen **zyklischen Graphen** mit Qualitätskontrolle:")
     
     # Graphviz Diagramm - Sieht sehr technisch und professionell aus
+    # Graphviz Diagramm - Optimiert für Light & Dark Mode
     st.graphviz_chart("""
         digraph {
             rankdir=LR;
             bgcolor="transparent";
-            node [shape=box, style="filled,rounded", fontname="Arial", fontsize=12];
-            edge [fontname="Arial", fontsize=10];
+            
+            # Global: Nutze SlateGrey für Texte/Linien (Lesbar auf Weiß & Dunkel)
+            graph [fontname="Arial", fontsize=10];
+            edge [fontname="Arial", fontsize=10, color="#607D8B", fontcolor="#607D8B"];
+            
+            # Nodes: Immer schwarzer Text auf Pastell-Hintergrund (Maximaler Kontrast)
+            node [shape=box, style="filled,rounded", fontname="Arial", fontsize=12, fontcolor="#000000", margin=0.1];
 
             # Nodes definieren
             Start [shape=oval, fillcolor="#e0e0e0", label="Start\n(User Frage)"];
@@ -94,15 +100,15 @@ with st.expander("ℹ️ Architektur & Workflow anzeigen (Live-Graph)", expanded
             End [shape=oval, fillcolor="#c8e6c9", label="✅ Output\n(Antwort)"];
             Escalate [shape=oval, fillcolor="#ffcdd2", label="🛑 Eskalation\n(Supervisor)"];
 
-            # Kanten (Verbindungen) ziehen
+            # Standard-Fluss (SlateGrey)
             Start -> Retrieve;
-            Retrieve -> Generate [label="Kontext (SOPs)"];
+            Retrieve -> Generate [label="Kontext"];
             Generate -> Auditor [label="Entwurf"];
             
-            # Die Entscheidungs-Wege
-            Auditor -> End [label="Pass", color="#2e7d32", penwidth=2.0];
-            Auditor -> Generate [label="Fail / Retry\n(Loop)", color="#c62828", style="dashed", penwidth=1.5];
-            Auditor -> Escalate [label="No Data", color="#ef6c00"];
+            # Entscheidungs-Wege (Explizite Farben, die überall wirken)
+            Auditor -> End [label="Pass", color="#2e7d32", fontcolor="#2e7d32", penwidth=2.0];     # Dunkelgrün
+            Auditor -> Generate [label="Fail / Retry", color="#d32f2f", fontcolor="#d32f2f", style="dashed"]; # Dunkelrot
+            Auditor -> Escalate [label="No Data", color="#e65100", fontcolor="#e65100"];           # Dunkelorange
         }
     """)
 
@@ -374,4 +380,5 @@ if not st.session_state.pending_escalation:
                     except Exception as e:
                         status_container.update(label="💥 Fehler", state="error")
                         st.error(str(e))
+
 
