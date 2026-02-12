@@ -363,54 +363,76 @@ if not st.session_state.pending_escalation:
                             status_container.write("⚖️ **Auditor:** ✅ Antwort ist GMP-konform.")
                             status_container.update(label="✅ Fertig", state="complete")
 
-                        # --- ERGEBNIS ANZEIGE ---
+                        # --- ERGEBNIS ---
                         if final_state["status"] == "ESCALATE":
                             st.session_state.pending_escalation = last_user_prompt
                             st.rerun()
                         else:
-                            # OPTIMIERTE QUELLENANZEIGE (EVIDENCE)
-                            with st.expander("🔍 Quellen & SOPs anzeigen (Evidence)", expanded=False):
+                            # 1. Helper-Funktion für Smart-Snippets (Lokal definiert)
+                            def extract_relevant_context(full_text, query):
+                                """Zeigt nur Sätze/Abschnitte, die Keywords enthalten."""
+                                # Keywords aus der User-Frage extrahieren (alles > 3 Buchstaben)
+                                keywords = [w.lower() for w in query.split() if len(w) > 3]
+                                
+                                # Text in logische Blöcke teilen (Zeilenumbrüche nutzen)
+                                lines = full_text.split('\n')
+                                relevant_snippets = []
+                                
+                                for line in lines:
+                                    line_clean = line.strip()
+                                    if not line_clean: continue # Leere Zeilen überspringen
+                                    
+                                    # Check: Enthält die Zeile ein Keyword ODER ist es eine wichtige Überschrift?
+                                    is_hit = any(k in line_clean.lower() for k in keywords)
+                                    is_header = any(h in line_clean for h in ["URSACHE", "CAPA", "MASSNAHME", "PROBLEM", "Fehler:"])
+                                    
+                                    if is_hit or (is_header and len(relevant_snippets) > 0):
+                                        # Markdown Header bereinigen (# entfernen)
+                                        clean_line = line_clean.replace("#", "").strip()
+                                        relevant_snippets.append(clean_line)
+                                
+                                # Fallback: Wenn gar kein Keyword-Match (da Vektorsuche semantisch ist),
+                                # zeigen wir einfach die ersten 300 Zeichen.
+                                if not relevant_snippets:
+                                    return full_text[:300] + " [...]"
+                                
+                                # Wir nehmen max 4 Schnipsel, damit es nicht zu lang wird
+                                display_text = "\n[...]\n".join(relevant_snippets[:5])
+                                return "[...]\n" + display_text + "\n[...]"
+
+                            # 2. Anzeige im Expander
+                            with st.expander("🔍 Quellen & SOPs (Evidence)", expanded=False):
                                 for i, doc in enumerate(final_state["context"]):
-                                    # Metadaten holen
+                                    # Metadaten
                                     meta = final_state["metadata"][i] if i < len(final_state["metadata"]) else {}
-                                    source_name = os.path.basename(meta.get("source", "Unbekannte Quelle"))
+                                    source_name = os.path.basename(meta.get("source", "Unknown"))
                                     
-                                    # 1. Überschriften entfernen (Clean-Up)
-                                    # Wir ersetzen # durch nichts, damit Streamlit keine riesigen H1/H2 draus macht
-                                    clean_content = doc.replace("# ", "").replace("## ", "").replace("### ", "")
+                                    # Smart Snippet generieren
+                                    smart_text = extract_relevant_context(doc, last_user_prompt)
                                     
-                                    # 2. Text kürzen (aber nicht zu kurz!)
-                                    # Wir zeigen bis zu 800 Zeichen, damit der Kontext sichtbar ist
-                                    preview_text = clean_content[:800] + " [...]" if len(clean_content) > 800 else clean_content
-                                    
-                                    # 3. Visuelle Darstellung als kompakte "Karte"
-                                    # Wir nutzen HTML für volle Kontrolle über Schriftgröße und Hintergrund
+                                    # Anzeige als Karte
                                     st.markdown(f"**📄 Quelle {i+1}:** `{source_name}`")
                                     st.markdown(f"""
                                     <div style="
                                         background-color: rgba(128, 128, 128, 0.1); 
-                                        padding: 15px; 
+                                        padding: 10px; 
                                         border-radius: 5px; 
-                                        border-left: 3px solid #4CAF50;
+                                        border-left: 4px solid #4CAF50;
                                         font-size: 0.85em; 
                                         color: inherit;
                                         font-family: monospace;
+                                        line-height: 1.4;
                                         white-space: pre-wrap;">
-                                        {preview_text}
+                                        {smart_text}
                                     </div>
                                     """, unsafe_allow_html=True)
                                     
                                     st.divider()
                             
-                            # Die eigentliche Antwort anzeigen
+                            # 3. Finale Antwort
                             st.markdown(final_state["answer"])
                             st.session_state.messages.append({"role": "assistant", "content": final_state["answer"]})
 
                     except Exception as e:
                         status_container.update(label="💥 Fehler", state="error")
                         st.error(str(e))
-
-
-
-
-
