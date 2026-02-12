@@ -363,25 +363,53 @@ if not st.session_state.pending_escalation:
                             status_container.write("⚖️ **Auditor:** ✅ Antwort ist GMP-konform.")
                             status_container.update(label="✅ Fertig", state="complete")
 
-                        # --- ERGEBNIS ---
+                        # --- ERGEBNIS ANZEIGE ---
                         if final_state["status"] == "ESCALATE":
                             st.session_state.pending_escalation = last_user_prompt
                             st.rerun()
                         else:
-                            with st.expander("🔍 Quellen & SOPs (Evidence)"):
+                            # OPTIMIERTE QUELLENANZEIGE (EVIDENCE)
+                            with st.expander("🔍 Quellen & SOPs anzeigen (Evidence)", expanded=False):
                                 for i, doc in enumerate(final_state["context"]):
+                                    # Metadaten holen
                                     meta = final_state["metadata"][i] if i < len(final_state["metadata"]) else {}
-                                    source = os.path.basename(meta.get("source", "Unknown"))
-                                    st.markdown(f"**📄 {source}**")
-                                    st.caption(doc[:200]+"...")
+                                    source_name = os.path.basename(meta.get("source", "Unbekannte Quelle"))
+                                    
+                                    # 1. Überschriften entfernen (Clean-Up)
+                                    # Wir ersetzen # durch nichts, damit Streamlit keine riesigen H1/H2 draus macht
+                                    clean_content = doc.replace("# ", "").replace("## ", "").replace("### ", "")
+                                    
+                                    # 2. Text kürzen (aber nicht zu kurz!)
+                                    # Wir zeigen bis zu 800 Zeichen, damit der Kontext sichtbar ist
+                                    preview_text = clean_content[:800] + " [...]" if len(clean_content) > 800 else clean_content
+                                    
+                                    # 3. Visuelle Darstellung als kompakte "Karte"
+                                    # Wir nutzen HTML für volle Kontrolle über Schriftgröße und Hintergrund
+                                    st.markdown(f"**📄 Quelle {i+1}:** `{source_name}`")
+                                    st.markdown(f"""
+                                    <div style="
+                                        background-color: rgba(128, 128, 128, 0.1); 
+                                        padding: 15px; 
+                                        border-radius: 5px; 
+                                        border-left: 3px solid #4CAF50;
+                                        font-size: 0.85em; 
+                                        color: inherit;
+                                        font-family: monospace;
+                                        white-space: pre-wrap;">
+                                        {preview_text}
+                                    </div>
+                                    """, unsafe_allow_html=True)
+                                    
                                     st.divider()
                             
+                            # Die eigentliche Antwort anzeigen
                             st.markdown(final_state["answer"])
                             st.session_state.messages.append({"role": "assistant", "content": final_state["answer"]})
 
                     except Exception as e:
                         status_container.update(label="💥 Fehler", state="error")
                         st.error(str(e))
+
 
 
 
